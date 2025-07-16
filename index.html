@@ -8,18 +8,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <!-- AOS Library for Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome for flat icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chosen Palette: Cosmic Purple (Adjusted for pleasant visualization) -->
-    <!-- Application Structure Plan: The application is a single, infinitely scrolling page. All major content sections (Hero, Problem, Solution, Target Market, Ecosystem, Opportunity, Prototype Gallery) are presented sequentially from top to bottom. The navigation bar remains fixed at the top, allowing users to jump to any main section. For the 'Target Market' section, clicking on individual audience cards will still trigger a modal to display detailed information. The new 'Prototype Gallery' section features clickable image thumbnails that open a dedicated image modal with navigation. This linear, scrollable structure is intuitive for users, while interactive elements offer deeper dives and visual exploration. -->
+    <!-- Application Structure Plan: The application is a single, infinitely scrolling page. All major content sections (Hero, Problem, Solution, Target Market, Ecosystem, Monetization & Content, Prototype Gallery, Opportunity) are presented sequentially from top to bottom. The navigation bar remains fixed at the top, allowing users to jump to any main section. For the 'Target Market' section, clicking on individual audience cards will still trigger a modal to display detailed information. The new 'Prototype Gallery' section features clickable image thumbnails that open a dedicated image modal with navigation. This linear, scrollable structure is intuitive for users, while interactive elements offer deeper dives and visual exploration. -->
     <!-- Visualization & Content Choices:
     - Hero Section: A prominent introductory section with a clear call to action. Goal: Engage. Interaction: Smooth scroll to the next section.
-    - Problem & Solution Diagrams: Simplified, flat diagrams using Unicode icons and subtle CSS animations/transitions to visually represent fragmentation and unification. Goal: Inform/Impact. Interaction: Hover effects on icons.
+    - Problem & Solution Diagrams: Simplified, flat diagrams using Font Awesome icons and subtle CSS animations/transitions to visually represent fragmentation and unification. Goal: Inform/Impact. Interaction: Hover effects on icons.
     - Target Market: Each audience group (Gamers, Creators, etc.) is a clickable card. Clicking a card opens a modal displaying detailed information. Goal: Organize/Explore. Interaction: Click to open modal, close modal button. Justification: Provides in-depth information on demand, preventing clutter on the main page and enhancing user control.
-    - Ecosystem (Inspirations & Differentiators): Presented as distinct sub-sections within the main flow, with Unicode icons and concise text. Goal: Inform/Highlight. Interaction: Subtle hover effects on cards.
+    - Ecosystem (Inspirations & Differentiators): Presented as distinct sub-sections within the main flow, with Font Awesome icons and concise text. Goal: Inform/Highlight. Interaction: Subtle hover effects on cards.
+    - Monetization & Content: New section detailing integrated currency, various monetization methods (Superchats, bits, subscriptions, digital asset sales), and expanded content types (podcasts). Emphasizes cross-community content creation. Goal: Inform/Detail. Interaction: Standard section scroll.
     - Opportunity Section: A concluding call-to-action section at the bottom of the page. Goal: Persuade. Interaction: Click to scroll to top.
     - Prototype Gallery: A grid of clickable image thumbnails. Goal: Visualize/Explore. Interaction: Click to open a full-screen modal with image navigation (next/previous) and close functionality. Justification: Allows users to visually inspect prototype idealizations in detail without leaving the page.
     - Saccey Logo: The provided image logo is used in the header and the solution diagram. The text "Saccey" uses the 'Varela Round' font with a custom orange gradient for branding consistency.
-    - UI/UX Feedback: Extensive use of rounded corners, subtle box-shadows for depth, smooth transitions on hover/active states for all interactive elements (buttons, navigation links, cards, modal), and clear modal open/close animations. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    - UI/UX Feedback: Extensive use of rounded corners, subtle box-shadows for depth, smooth transitions on hover/active states for all interactive elements (buttons, navigation links, cards, modal), and clear modal open/close animations. Enhanced diagram hub animations. Added AOS for scroll-triggered animations. -->
     <style>
         /* Variáveis da Paleta de Cores "Cosmic Purple" */
         :root {
@@ -228,20 +232,43 @@
             color: var(--branco-gelo);
             font-size: 3rem;
             border: 2px solid var(--roxo-vibrante);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Adicionado para animação */
         }
         .diagram-center-element.saccey-hub {
             background: linear-gradient(45deg, var(--dark-purple-hover-start), var(--dark-purple-hover-end));
             border: none;
+            animation: pulse 2s infinite ease-in-out; /* Animação de pulso */
         }
-        .diagram-center-element.saccey-hub.saccey-logo-text {
-            font-size: 82px;
-            display: flex;
+        .diagram-center-element.saccey-hub:hover {
+            animation: none; /* Remove a animação de pulso no hover */
+            transform: scale(1.05); /* Efeito de zoom no hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         }
-        .diagram-center-element img {
-            width: 120px;
-            height: 120px;
+
+        /* Keyframes para animação de pulso */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        }
+
+        .diagram-center-element.saccey-hub .saccey-logo-text-small {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 1.8rem; /* Ajuste para caber melhor */
+            line-height: 1;
+            background: var(--text-orange-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+            margin-top: 5px; /* Espaço entre a imagem e o texto */
+        }
+        .diagram-center-element.saccey-hub img.saccey-logo-in-hub {
+            width: 80px; /* Tamanho da imagem da logo no hub */
+            height: 80px;
             object-fit: contain;
+            margin-bottom: 5px; /* Espaço entre a imagem e o texto */
         }
+
 
         .diagram-app-icon {
             position: absolute;
@@ -268,6 +295,11 @@
             font-size: 0.75rem;
             margin-top: 5px;
             color: var(--cinza-roxo-escuro);
+        }
+        /* Font Awesome icon size adjustment for diagrams */
+        .diagram-app-icon .fa, .diagram-app-icon .fas, .diagram-app-icon .fab {
+            font-size: 2.2rem; /* Slightly larger for better visibility */
+            color: var(--roxo-vibrante); /* Use primary color for icons */
         }
 
         /* Positions for Problem Diagram */
@@ -431,6 +463,13 @@
         .card-small .text-xs {
             line-height: 1.3;
         }
+        /* Font Awesome icon size adjustment for inspiration cards */
+        .card-small .fa, .card-small .fas, .card-small .fab {
+            font-size: 1.5rem; /* Adjust size for smaller cards */
+            margin-right: 5px; /* Space between icon and text */
+            color: var(--roxo-vibrante); /* Use primary color for icons */
+        }
+
 
         /* Card Feature (for differentiators) */
         .card-feature {
@@ -862,7 +901,6 @@
     <header id="header">
         <div class="container header-container">
             <a href="#hero" class="logo-container">
-                <!--<img src="20250710_2344_Gamer Community Logo Variations_simple_compose_01jzvnvfqsfvy86ad59q1w594n.png-801f8fae-2496-4263-bd56-99cb25ec22ad" alt="Saccey Logo" class="logo-img"> -->
                 <span class="saccey-logo-text">Saccey</span>
             </a>
             
@@ -872,7 +910,8 @@
                     <li><a href="#solution-section">A Solução</a></li>
                     <li><a href="#market-section">Mercado</a></li>
                     <li><a href="#ecosystem-section">Ecossistema</a></li>
-                    <li><a href="#prototype-section">Protótipo</a></li> <!-- Novo link -->
+                    <li><a href="#monetization-content-section">Monetização</a></li>
+                    <li><a href="#prototype-section">Protótipo</a></li>
                     <li><a href="#opportunity-section">Oportunidade</a></li>
                 </ul>
             </nav>
@@ -883,39 +922,39 @@
     <main>
         <section id="hero" class="py-20 text-center">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-6xl font-bold mb-4 text-[--branco-gelo]">A Solução para a <span class="accent-gradient-text">Fragmentação Digital</span></h2>
-                <p class="text-lg md:text-xl text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-8">O Saccey é uma plataforma inovadora que integra comunicação, streaming, comércio digital e interações sociais em um ambiente único e fluido. Projetada para ser acessível e responsiva, ela visa resolver a fragmentação de experiências online, oferecendo um "terceiro espaço digital" onde usuários podem se conectar, criar e monetizar conteúdos de forma integrada.</p>
-                <a href="#problem-section" class="bg-[--roxo-vibrante] text-white font-bold py-3 px-8 rounded-full hover:bg-[--roxo-claro] transition-all duration-300 shadow-lg hover:shadow-xl">Explore a Oportunidade</a>
+                <h2 class="text-4xl md:text-6xl font-bold mb-4 text-[--branco-gelo]" data-aos="fade-up" data-aos-duration="1000">A Solução para a <span class="accent-gradient-text">Fragmentação Digital</span></h2>
+                <p class="text-lg md:text-xl text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">O Saccey é uma plataforma inovadora que integra comunicação, streaming, comércio digital e interações sociais em um ambiente único e fluido. Projetada para ser acessível e responsiva, ela visa resolver a fragmentação de experiências online, oferecendo um "terceiro espaço digital" onde usuários podem se conectar, criar e monetizar conteúdos de forma integrada.</p>
+                <a href="#problem-section" class="bg-[--roxo-vibrante] text-white font-bold py-3 px-8 rounded-full hover:bg-[--roxo-claro] transition-all duration-300 shadow-lg hover:shadow-xl" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">Explore a Oportunidade</a>
             </div>
         </section>
 
         <!-- Seção: O Problema -->
         <section id="problem-section" class="py-16 bg-[--azul-cinza-escuro]">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">A Dor do Cenário Digital Atual</h2>
-                <p class="section-subtitle">A experiência do usuário hoje é um quebra-cabeça. Pessoas pulam entre dezenas de apps, criando atrito, dispersando a atenção e limitando o potencial de monetização. Plataformas tradicionais não oferecem navegação consolidada, o que dificulta a produtividade, o engajamento e a retenção. Ao operar em múltiplos apps, o usuário perde o senso de “casa digital”, dificultando a fidelização e a construção de comunidade.</p>
-                <div class="diagram-container">
+                <h2 class="section-title" data-aos="fade-up">A Dor do Cenário Digital Atual</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">A experiência do usuário hoje é um quebra-cabeça. Pessoas pulam entre dezenas de apps, criando atrito, dispersando a atenção e limitando o potencial de monetização. Plataformas tradicionais não oferecem navegação consolidada, o que dificulta a produtividade, o engajamento e a retenção. Ao operar em múltiplos apps, o usuário perde o senso de “casa digital”, dificultando a fidelização e a construção de comunidade.</p>
+                <div class="diagram-container" data-aos="zoom-in" data-aos-delay="200">
                     <div class="diagram-center-element">
-                        <span>👤</span>
+                        <i class="fas fa-user"></i>
                         <span class="label">Usuário</span>
                     </div>
                     <div class="diagram-app-icon problem-app-1">
-                        <span>💬</span><span class="label">Chat</span>
+                        <i class="fas fa-comments"></i><span class="label">Chat</span>
                     </div>
                     <div class="diagram-app-icon problem-app-2">
-                        <span>📺</span><span class="label">Streaming</span>
+                        <i class="fas fa-video"></i><span class="label">Streaming</span>
                     </div>
                     <div class="diagram-app-icon problem-app-3">
-                        <span>🛒</span><span class="label">Comércio</span>
+                        <i class="fas fa-shopping-cart"></i><span class="label">Comércio</span>
                     </div>
                     <div class="diagram-app-icon problem-app-4">
-                        <span>🌐</span><span class="label">Social</span>
+                        <i class="fas fa-globe"></i><span class="label">Social</span>
                     </div>
                     <div class="diagram-app-icon problem-app-5">
-                        <span>📝</span><span class="label">Fóruns</span>
+                        <i class="fas fa-clipboard-list"></i><span class="label">Fóruns</span>
                     </div>
                     <div class="diagram-app-icon problem-app-6">
-                        <span>🗓️</span><span class="label">Eventos</span>
+                        <i class="fas fa-calendar-alt"></i><span class="label">Eventos</span>
                     </div>
                 </div>
             </div>
@@ -924,24 +963,24 @@
         <!-- Seção: A Solução -->
         <section id="solution-section" class="py-16">
             <div class="container mx-auto px-6">
-                <h2 class="section-title"><span class="saccey-logo-text">Saccey</span>: O <span class="accent-gradient-text">Terceiro Espaço Digital</span> Unificado</h2>
-                <p class="section-subtitle">O Saccey responde a esses problemas com uma UX que prioriza a unificação, fluidez e flexibilidade: todos os recursos podem ser acessados sem mudar de ambiente, a curva de aprendizagem é reduzida por elementos e padrões já familiares, e a interface é adaptável, robusta e inclusiva (atende padrões WAI-ARIA, acessibilidade e internacionalização nativas).</p>
-                <div class="diagram-container">
+                <h2 class="section-title" data-aos="fade-up"><span class="saccey-logo-text">Saccey</span>: O <span class="accent-gradient-text">Terceiro Espaço Digital</span> Unificado</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">O Saccey responde a esses problemas com uma UX que prioriza a unificação, fluidez e flexibilidade: todos os recursos podem ser acessados sem mudar de ambiente, a curva de aprendizagem é reduzida por elementos e padrões já familiares, e a interface é adaptável, robusta e inclusiva (atende padrões WAI-ARIA, acessibilidade e internacionalização nativas).</p>
+                <div class="diagram-container" data-aos="zoom-in" data-aos-delay="200">
                     <div class="diagram-center-element saccey-hub">
-                        <img src="https://i.imgur.com/cBCjK0Y.png-801f8fae-2496-4263-bd56-99cb25ec22ad" alt="Saccey Logo Central">
-                        <span class="saccey-logo-text">Saccey</span>
+                        <img src="https://i.imgur.com/cBCjK0Y.png" alt="Saccey Logo Central" class="saccey-logo-in-hub">
+                        <span class="saccey-logo-text-small">Saccey</span>
                     </div>
                     <div class="diagram-app-icon solution-app-1">
-                        <span>💬</span><span class="label">Chat</span>
+                        <i class="fas fa-comments"></i><span class="label">Chat</span>
                     </div>
                     <div class="diagram-app-icon solution-app-2">
-                        <span>📺</span><span class="label">Streaming</span>
+                        <i class="fas fa-video"></i><span class="label">Streaming</span>
                     </div>
                     <div class="diagram-app-icon solution-app-3">
-                        <span>🛒</span><span class="label">Comércio</span>
+                        <i class="fas fa-shopping-cart"></i><span class="label">Comércio</span>
                     </div>
                     <div class="diagram-app-icon solution-app-4">
-                        <span>🌐</span><span class="label">Social</span>
+                        <i class="fas fa-globe"></i><span class="label">Social</span>
                     </div>
                 </div>
             </div>
@@ -950,31 +989,31 @@
         <!-- Seção: Público-Alvo -->
         <section id="market-section" class="py-16 bg-[--azul-cinza-escuro]">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Comunidades Inclusivas e Escaláveis</h2>
-                <p class="section-subtitle">O Saccey atende a diversos perfis, promovendo comunidades inclusivas e escaláveis. Clique nos cards para explorar como atendemos a cada perfil-chave, garantindo crescimento orgânico e engajamento.</p>
+                <h2 class="section-title" data-aos="fade-up">Comunidades Inclusivas e Escaláveis</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">O Saccey atende a diversos perfis, promovendo comunidades inclusivas e escaláveis. Clique nos cards para explorar como atendemos a cada perfil-chave, garantindo crescimento orgânico e engajamento.</p>
                 
                 <div class="audience-grid">
-                    <div class="audience-card" data-audience="gamers">
+                    <div class="audience-card" data-audience="gamers" data-aos="fade-up" data-aos-delay="200">
                         <span class="card-icon">🎮</span>
                         <h3 class="card-title">Gamers e Jogadores</h3>
                         <p class="card-description">Espaços dedicados, lives, marketplace para itens in-game.</p>
                     </div>
-                    <div class="audience-card" data-audience="creators">
+                    <div class="audience-card" data-audience="creators" data-aos="fade-up" data-aos-delay="300">
                         <span class="card-icon">🎨</span>
                         <h3 class="card-title">Criadores de Conteúdo</h3>
                         <p class="card-description">Ferramentas de produção, edição, transmissão e monetização.</p>
                     </div>
-                    <div class="audience-card" data-audience="thematic">
+                    <div class="audience-card" data-audience="thematic" data-aos="fade-up" data-aos-delay="400">
                         <span class="card-icon">💡</span>
                         <h3 class="card-title">Comunidades Temáticas</h3>
                         <p class="card-description">Fóruns, eventos, compartilhamento de recursos para interesses específicos.</p>
                     </div>
-                    <div class="audience-card" data-audience="social">
+                    <div class="audience-card" data-audience="social" data-aos="fade-up" data-aos-delay="500">
                         <span class="card-icon">👥</span>
                         <h3 class="card-title">Grupos Sociais</h3>
                         <p class="card-description">Chats, feeds personalizados e ferramentas de moderação em escala.</p>
                     </div>
-                    <div class="audience-card" data-audience="education">
+                    <div class="audience-card" data-audience="education" data-aos="fade-up" data-aos-delay="600">
                         <span class="card-icon">📚</span>
                         <h3 class="card-title">Comunidades de Ensino</h3>
                         <p class="card-description">Aulas ao vivo, materiais exclusivos e interações entre alunos e instrutores.</p>
@@ -986,20 +1025,22 @@
         <!-- Seção: Ecossistema -->
         <section id="ecosystem-section" class="py-16">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Um Ecossistema <span class="accent-gradient-text">Inovador</span></h2>
-                <p class="section-subtitle">Não reinventamos a roda: nós a aprimoramos. Unificamos as melhores funcionalidades do mercado e adicionamos diferenciais poderosos.</p>
+                <h2 class="section-title" data-aos="fade-up">Um Ecossistema <span class="accent-gradient-text">Inovador</span></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Não reinventamos a roda: nós a aprimoramos. Unificamos as melhores funcionalidades do mercado e adicionamos diferenciais poderosos.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                    <div>
+                    <div data-aos="fade-right" data-aos-delay="200">
                         <h3 class="text-2xl font-bold mb-6 text-center text-[--branco-gelo]">Inspirado nos Líderes</h3>
                          <div class="grid grid-cols-2 gap-4 text-center">
-                            <div class="card-small">🤝 Discord <br><span class="text-xs text-[--cinza-claro]">Comunicação em servidores com canais de voz/texto e moderação.</span></div>
-                            <div class="card-small">▶️ YouTube <br><span class="text-xs text-[--cinza-claro]">Ferramentas de vídeo, playlists e monetização por conteúdo.</span></div>
-                            <div class="card-small">👾 Twitch <br><span class="text-xs text-[--cinza-claro]">Streaming ao vivo e interações com audiência.</span></div>
-                            <div class="card-small">📦 Steam <br><span class="text-xs text-[--cinza-claro]">Marketplace para itens digitais e gerenciamento de inventário.</span></div>
-                            <div class="card-small col-span-2">👽 Reddit <br><span class="text-xs text-[--cinza-claro]">Fóruns temáticos, upvotes e discussões comunitárias.</span></div>
+                            <div class="card-small"><i class="fab fa-discord"></i> Discord <br><span class="text-xs text-[--cinza-claro]">Comunicação em servidores com canais de voz/texto e moderação.</span></div>
+                            <div class="card-small"><i class="fab fa-youtube"></i> YouTube <br><span class="text-xs text-[--cinza-claro]">Ferramentas de vídeo, playlists e monetização por conteúdo.</span></div>
+                            <div class="card-small"><i class="fab fa-twitch"></i> Twitch <br><span class="text-xs text-[--cinza-claro]">Streaming ao vivo e interações com audiência.</span></div>
+                            <div class="card-small"><i class="fab fa-steam"></i> Steam <br><span class="text-xs text-[--cinza-claro]">Marketplace para itens digitais e gerenciamento de inventário.</span></div>
+                            <div class="card-small"><i class="fab fa-reddit"></i> Reddit <br><span class="text-xs text-[--cinza-claro]">Fóruns temáticos, upvotes e discussões comunitárias.</span></div>
+                            <div class="card-small"><i class="fab fa-telegram-plane"></i> Telegram <br><span class="text-xs text-[--cinza-claro]">Mensagens pessoais e grupos privados.</span></div>
+                            <div class="card-small col-span-2"><i class="fas fa-video"></i> TikTok/Reels/Shorts <br><span class="text-xs text-[--cinza-claro]">Vídeos curtos e engajamento rápido.</span></div>
                          </div>
                     </div>
-                    <div>
+                    <div data-aos="fade-left" data-aos-delay="200">
                         <h3 class="text-2xl font-bold mb-6 text-center text-[--branco-gelo]">Nossos Diferenciais</h3>
                         <div class="space-y-4">
                             <div class="card-feature">
@@ -1020,38 +1061,69 @@
             </div>
         </section>
 
-        <!-- Seção: Protótipo -->
-        <section id="prototype-section" class="py-16 bg-[--azul-cinza-escuro]">
+        <!-- Nova Seção: Monetização e Conteúdo -->
+        <section id="monetization-content-section" class="py-16 bg-[--azul-cinza-escuro]">
             <div class="container mx-auto px-6">
-                <h2 class="section-title">Idealização do Protótipo</h2>
-                <p class="section-subtitle">Explore a visão e o design do Saccey através de algumas telas e conceitos iniciais do protótipo.</p>
+                <h2 class="section-title" data-aos="fade-up">Monetização e Conteúdo <span class="accent-gradient-text">Sem Limites</span></h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">No Saccey, a liberdade criativa e financeira andam lado a lado. Oferecemos um ecossistema robusto para criadores e consumidores.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card-feature" data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="font-bold text-lg">💰 Moeda Integrada "Tips"</h4>
+                        <p class="text-[--cinza-roxo-escuro] mt-1">Nossa moeda digital, "Tips", permite doações diretas aos criadores (similar a "Superchats" ou "Bits" da Twitch), assinaturas para conteúdo exclusivo, e a compra e venda de ativos digitais dentro do marketplace. Tudo em um só lugar, simplificando as transações.</p>
+                    </div>
+                    <div class="card-feature" data-aos="fade-up" data-aos-delay="300">
+                        <h4 class="font-bold text-lg">🎙️ Conteúdo Além do Vídeo: Podcasts e Mais</h4>
+                        <p class="text-[--cinza-roxo-escuro] mt-1">Além de vídeos e transmissões ao vivo, o Saccey suporta a criação e distribuição de podcasts, artigos, e-books e outros formatos de mídia. Damos aos criadores a flexibilidade de expressar sua criatividade em qualquer formato que desejarem.</p>
+                    </div>
+                    <div class="card-feature col-span-1 md:col-span-2" data-aos="fade-up" data-aos-delay="400">
+                        <h4 class="font-bold text-lg">💳 Retirada de Ganhos Simplificada</h4>
+                        <p class="text-[--cinza-roxo-escuro] mt-1">Facilitamos a retirada dos ganhos dos criadores através de integrações com as principais plataformas de pagamento, como **Stripe**, **PayPal** e **Mercado Pago**. Seus lucros, do seu jeito.</p>
+                    </div>
+                    <div class="card-feature col-span-1 md:col-span-2" data-aos="fade-up" data-aos-delay="500">
+                        <h4 class="font-bold text-lg">📊 Anúncios e Repasse de Economia</h4>
+                        <p class="text-[--cinza-roxo-escuro] mt-1">Oferecemos a possibilidade de habilitar anúncios nos espaços, gerando uma nova fonte de receita. Implementamos um sistema de repasse de economia que permite aos administradores dos espaços e aos criadores de conteúdo compartilharem diretamente uma parte dos ganhos com suas equipes (administrativa e pessoal), promovendo um modelo de negócio justo e colaborativo.</p>
+                    </div>
+                    <div class="card-feature col-span-1 md:col-span-2" data-aos="fade-up" data-aos-delay="600">
+                        <h4 class="font-bold text-lg">🌍 Criadores Sem Limites de Canais</h4>
+                        <p class="text-[--cinza-roxo-escuro] mt-1">Criadores não precisam se limitar a um único canal ou comunidade. Eles podem criar e distribuir seus conteúdos em vários espaços de comunidades diferentes dentro do Saccey, alcançando diversas audiências e maximizando seu impacto e monetização.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Protótipo -->
+        <section id="prototype-section" class="py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title" data-aos="fade-up">Idealização do Protótipo</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Explore a visão e o design do Saccey através de algumas telas e conceitos iniciais do protótipo.</p>
                 
                 <div class="gallery-grid">
-                    <div class="gallery-thumbnail" onclick="openImageModal(0)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(0)" data-aos="zoom-in" data-aos-delay="200">
                         <img src="https://i.imgur.com/7fY23yZ.png" alt="Feed do Protótipo">
                         <div class="thumbnail-title">Feed</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(1)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(1)" data-aos="zoom-in" data-aos-delay="300">
                         <img src="https://i.imgur.com/BNOzU3h.png" alt="Feed do Protótipo">
                         <div class="thumbnail-title">Feed</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(2)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(2)" data-aos="zoom-in" data-aos-delay="400">
                         <img src="https://i.imgur.com/gboGyNe.png" alt="Studio do Protótipo">
                         <div class="thumbnail-title">Studio</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(3)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(3)" data-aos="zoom-in" data-aos-delay="500">
                         <img src="https://i.imgur.com/gUtsNSH.png" alt="Feed Lives do Protótipo">
                         <div class="thumbnail-title">Feed Lives</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(4)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(4)" data-aos="zoom-in" data-aos-delay="600">
                         <img src="https://i.imgur.com/AUBlGRT.png" alt="Marketplace do Protótipo">
                         <div class="thumbnail-title">Marketplace</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(5)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(5)" data-aos="zoom-in" data-aos-delay="700">
                         <img src="https://i.imgur.com/bht81Gz.png" alt="Explorar do Protótipo">
                         <div class="thumbnail-title">Explorar</div>
                     </div>
-                    <div class="gallery-thumbnail" onclick="openImageModal(6)">
+                    <div class="gallery-thumbnail" onclick="openImageModal(6)" data-aos="zoom-in" data-aos-delay="800">
                         <img src="https://i.imgur.com/0vyu3bW.png" alt="Admin Panel do Protótipo">
                         <div class="thumbnail-title">Admin Panel</div>
                     </div>
@@ -1062,9 +1134,9 @@
         <!-- Seção: Oportunidade -->
         <section id="opportunity-section" class="py-16 bg-[--roxo-vibrante]">
             <div class="container mx-auto px-6 text-center text-white">
-                <h2 class="section-title text-[--branco-gelo]">Por Que Investir no Saccey?</h2>
-                <p class="text-lg max-w-3xl mx-auto opacity-90 text-[--branco-gelo]">O Saccey resolve dores como fragmentação de apps e falta de integração, oferecendo um espaço unificado para gamers, criadores e comunidades. Com monetização via assinaturas e ferramentas avançadas, é uma plataforma amigável que atrai usuários e fomenta conexões reais. Estamos construindo a solução definitiva para a fragmentação digital. Uma plataforma que beneficia usuários, capacita criadores e oferece um potencial de crescimento exponencial para investidores.</p>
-                <div class="mt-10">
+                <h2 class="section-title text-[--branco-gelo]" data-aos="fade-up">Por Que Investir no Saccey?</h2>
+                <p class="text-lg max-w-3xl mx-auto opacity-90 text-[--branco-gelo]" data-aos="fade-up" data-aos-delay="100">O Saccey resolve dores como fragmentação de apps e falta de integração, oferecendo um espaço unificado para gamers, criadores e comunidades. Com monetização via assinaturas e ferramentas avançadas, é uma plataforma amigável que atrai usuários e fomenta conexões reais. Estamos construindo a solução definitiva para a fragmentação digital. Uma plataforma que beneficia usuários, capacita criadores e oferece um potencial de crescimento exponencial para investidores.</p>
+                <div class="mt-10" data-aos="fade-up" data-aos-delay="200">
                      <a href="https://discord.gg/MuxAYuat" alt="Discord" class="bg-[--laranja-neon] text-white font-bold py-3 px-8 rounded-full hover:bg-[#FF8C3C] transition-all duration-300 shadow-lg hover:shadow-xl">Junte-se ao nosso Discord</a>
                 </div>
             </div>
@@ -1078,7 +1150,14 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        AOS.init({
+            once: true, // Whether animation should happen only once - while scrolling down
+            mirror: false, // Whether elements should animate out while scrolling past them
+            anchorPlacement: 'top-bottom', // Defines which position of the element should trigger the animation
+        });
+
         const audienceData = {
             gamers: {
                 title: "Gamers e Jogadores",
