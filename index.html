@@ -13,7 +13,7 @@
     <!-- Visualization & Content Choices:
     - Hero Section: A prominent introductory section with a clear call to action. Goal: Engage. Interaction: Smooth scroll to the next section.
     - Problem & Solution Diagrams: Simplified, flat diagrams using Unicode icons and subtle CSS animations/transitions to visually represent fragmentation and unification. Goal: Inform/Impact. Interaction: Hover effects on icons.
-    - Target Market: Each audience group (Gamers, Creators, etc.) is a clickable card. Clicking a card opens a modal displaying detailed information (Por que eles?, Como o Saccey ajuda?, Para que serve?). Goal: Organize/Explore. Interaction: Click to open modal, close modal button. Justification: Provides in-depth information on demand, preventing clutter on the main page and enhancing user control.
+    - Target Market: Each audience group (Gamers, Creators, etc.) is a clickable card. Clicking a card opens a modal displaying detailed information. Goal: Organize/Explore. Interaction: Click to open modal, close modal button. Justification: Provides in-depth information on demand, preventing clutter on the main page and enhancing user control.
     - Ecosystem (Inspirations & Differentiators): Presented as distinct sub-sections within the main flow, with Unicode icons and concise text. Goal: Inform/Highlight. Interaction: Subtle hover effects on cards.
     - Opportunity Section: A concluding call-to-action section at the bottom of the page. Goal: Persuade. Interaction: Click to scroll to top.
     - Prototype Gallery: A grid of clickable image thumbnails. Goal: Visualize/Explore. Interaction: Click to open a full-screen modal with image navigation (next/previous) and close functionality. Justification: Allows users to visually inspect prototype idealizations in detail without leaving the page.
@@ -230,8 +230,12 @@
             border: 2px solid var(--roxo-vibrante);
         }
         .diagram-center-element.saccey-hub {
-            background: linear-gradient(45deg, var(--roxo-vibrante), var(--roxo-claro));
+            background: linear-gradient(45deg, var(--dark-purple-hover-start), var(--dark-purple-hover-end));
             border: none;
+        }
+        .diagram-center-element.saccey-hub.saccey-logo-text {
+            font-size: 82px;
+            display: flex;
         }
         .diagram-center-element img {
             width: 120px;
@@ -858,7 +862,7 @@
     <header id="header">
         <div class="container header-container">
             <a href="#hero" class="logo-container">
-                <img src="20250710_2344_Gamer Community Logo Variations_simple_compose_01jzvnvfqsfvy86ad59q1w594n.png" alt="Saccey Logo" class="logo-img">
+                <!--<img src="20250710_2344_Gamer Community Logo Variations_simple_compose_01jzvnvfqsfvy86ad59q1w594n.png-801f8fae-2496-4263-bd56-99cb25ec22ad" alt="Saccey Logo" class="logo-img"> -->
                 <span class="saccey-logo-text">Saccey</span>
             </a>
             
@@ -924,7 +928,8 @@
                 <p class="section-subtitle">O Saccey responde a esses problemas com uma UX que prioriza a unificação, fluidez e flexibilidade: todos os recursos podem ser acessados sem mudar de ambiente, a curva de aprendizagem é reduzida por elementos e padrões já familiares, e a interface é adaptável, robusta e inclusiva (atende padrões WAI-ARIA, acessibilidade e internacionalização nativas).</p>
                 <div class="diagram-container">
                     <div class="diagram-center-element saccey-hub">
-                        <img src="20250710_2344_Gamer Community Logo Variations_simple_compose_01jzvnvfqsfvy86ad59q1w594n.png" alt="Saccey Logo Central">
+                        <img src="https://i.imgur.com/cBCjK0Y.png-801f8fae-2496-4263-bd56-99cb25ec22ad" alt="Saccey Logo Central">
+                        <span class="saccey-logo-text">Saccey</span>
                     </div>
                     <div class="diagram-app-icon solution-app-1">
                         <span>💬</span><span class="label">Chat</span>
@@ -1023,28 +1028,32 @@
                 
                 <div class="gallery-grid">
                     <div class="gallery-thumbnail" onclick="openImageModal(0)">
-                        <img src="https://placehold.co/600x400/2A2D3E/F5F5F5?text=Tela Inicial" alt="Tela Inicial do Protótipo">
-                        <div class="thumbnail-title">Tela Inicial</div>
+                        <img src="https://i.imgur.com/7fY23yZ.png" alt="Feed do Protótipo">
+                        <div class="thumbnail-title">Feed</div>
                     </div>
                     <div class="gallery-thumbnail" onclick="openImageModal(1)">
-                        <img src="https://placehold.co/600x400/2A2D3E/F5F5F5?text=Feed+de+Notícias" alt="Feed de Notícias do Protótipo">
-                        <div class="thumbnail-title">Feed de Notícias</div>
+                        <img src="https://i.imgur.com/BNOzU3h.png" alt="Feed do Protótipo">
+                        <div class="thumbnail-title">Feed</div>
                     </div>
                     <div class="gallery-thumbnail" onclick="openImageModal(2)">
-                        <img src="https://placehold.co/600x400/2A2D3E/F5F5F5?text=Chat+de+Comunidade" alt="Chat de Comunidade do Protótipo">
-                        <div class="thumbnail-title">Chat de Comunidade</div>
+                        <img src="https://i.imgur.com/gboGyNe.png" alt="Studio do Protótipo">
+                        <div class="thumbnail-title">Studio</div>
                     </div>
                     <div class="gallery-thumbnail" onclick="openImageModal(3)">
-                        <img src="https://placehold.co/600x400/2A2D3E/F5F5F5?text=Perfil+do+Usuário" alt="Perfil do Usuário do Protótipo">
-                        <div class="thumbnail-title">Perfil do Usuário</div>
+                        <img src="https://i.imgur.com/gUtsNSH.png" alt="Feed Lives do Protótipo">
+                        <div class="thumbnail-title">Feed Lives</div>
                     </div>
                     <div class="gallery-thumbnail" onclick="openImageModal(4)">
-                        <img src="https://placehold.co/600x400/2A2D3E/F5F5F5?text=Marketplace" alt="Marketplace do Protótipo">
+                        <img src="https://i.imgur.com/AUBlGRT.png" alt="Marketplace do Protótipo">
                         <div class="thumbnail-title">Marketplace</div>
                     </div>
                     <div class="gallery-thumbnail" onclick="openImageModal(5)">
-                        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?text=Configurações" alt="Tela de Configurações do Protótipo">
-                        <div class="thumbnail-title">Configurações</div>
+                        <img src="https://i.imgur.com/bht81Gz.png" alt="Explorar do Protótipo">
+                        <div class="thumbnail-title">Explorar</div>
+                    </div>
+                    <div class="gallery-thumbnail" onclick="openImageModal(6)">
+                        <img src="https://i.imgur.com/0vyu3bW.png" alt="Admin Panel do Protótipo">
+                        <div class="thumbnail-title">Admin Panel</div>
                     </div>
                 </div>
             </div>
@@ -1056,7 +1065,7 @@
                 <h2 class="section-title text-[--branco-gelo]">Por Que Investir no Saccey?</h2>
                 <p class="text-lg max-w-3xl mx-auto opacity-90 text-[--branco-gelo]">O Saccey resolve dores como fragmentação de apps e falta de integração, oferecendo um espaço unificado para gamers, criadores e comunidades. Com monetização via assinaturas e ferramentas avançadas, é uma plataforma amigável que atrai usuários e fomenta conexões reais. Estamos construindo a solução definitiva para a fragmentação digital. Uma plataforma que beneficia usuários, capacita criadores e oferece um potencial de crescimento exponencial para investidores.</p>
                 <div class="mt-10">
-                     <a href="#header" class="bg-[--laranja-neon] text-white font-bold py-3 px-8 rounded-full hover:bg-[#FF8C3C] transition-all duration-300 shadow-lg hover:shadow-xl">Junte-se a Nós</a>
+                     <a href="https://discord.gg/MuxAYuat" alt="Discord" class="bg-[--laranja-neon] text-white font-bold py-3 px-8 rounded-full hover:bg-[#FF8C3C] transition-all duration-300 shadow-lg hover:shadow-xl">Junte-se ao nosso Discord</a>
                 </div>
             </div>
         </section>
@@ -1103,13 +1112,15 @@
             }
         };
 
+        // Updated image gallery with provided Imgur links
         const imageGallery = [
-            { src: "https://placehold.co/1200x800/2A2D3E/F5F5F5?text=Tela Inicial do Protótipo", title: "Tela Inicial do Protótipo" },
-            { src: "https://placehold.co/1200x800/2A2D3E/F5F5F5?text=Feed de Notícias", title: "Feed de Notícias" },
-            { src: "https://placehold.co/1200x800/2A2D3E/F5F5F5?text=Chat de Comunidade", title: "Chat de Comunidade" },
-            { src: "https://placehold.co/1200x800/2A2D3E/F5F5F5?text=Perfil do Usuário", title: "Perfil do Usuário" },
-            { src: "https://placehold.co/1200x800/2A2D3E/F5F5F5?text=Marketplace", title: "Marketplace" },
-            { src: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?text=Configurações", title: "Tela de Configurações" }
+            { src: "https://i.imgur.com/7fY23yZ.png", title: "Feed do Protótipo (Visão 1)" },
+            { src: "https://i.imgur.com/BNOzU3h.png", title: "Feed do Protótipo (Visão 2)" },
+            { src: "https://i.imgur.com/gboGyNe.png", title: "Studio do Protótipo" },
+            { src: "https://i.imgur.com/gUtsNSH.png", title: "Feed Lives do Protótipo" },
+            { src: "https://i.imgur.com/AUBlGRT.png", title: "Marketplace do Protótipo" },
+            { src: "https://i.imgur.com/bht81Gz.png", title: "Explorar do Protótipo" },
+            { src: "https://i.imgur.com/0vyu3bW.png", title: "Admin Panel do Protótipo" }
         ];
         let currentImageIndex = 0;
 
