@@ -13,7 +13,7 @@
     <!-- Font Awesome for flat icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chosen Palette: Cosmic Purple -->
-    <!-- Application Structure Plan: The application is a single-page interactive web application (SPA) designed for easy consumption and exploration of the Saccey project. It uses a vertical scrolling layout with distinct thematic sections: Hero, Problem, Solution, Target Market, Unfair Competition, Monetization, Social Vision, Strategic Goal, Content Idea Generator, Prototype Gallery, and Opportunity. This structure was chosen to provide a clear narrative flow, guiding the user through the project's rationale, features, and vision. Interactive elements like modals for audience details and image gallery, and a functional content idea generator, enhance user engagement and understanding. Navigation is facilitated by a fixed header with smooth scrolling links. -->
+    <!-- Application Structure Plan: The application is a single-page interactive web application (SPA) designed for easy consumption and exploration of the Saccey project. It uses a vertical scrolling layout with distinct thematic sections: Hero, Problem, Solution, Target Market, Unfair Competition, Monetization, Social Vision, Strategic Goal, Prototype Gallery, and Opportunity. This structure was chosen to provide a clear narrative flow, guiding the user through the project's rationale, features, and vision. Interactive elements like modals for audience details and image gallery, and a functional content idea generator, enhance user engagement and understanding. Navigation is facilitated by a fixed header with smooth scrolling links. -->
     <!-- Visualization & Content Choices:
     - Hero Section: Presents the core value proposition. Goal: Engage. Interaction: Smooth scroll to next section. Method: Text with gradient accents.
     - Problem & Solution Sections: Illustrate the digital fragmentation issue and Saccey's unifying solution. Goal: Inform/Impact. Interaction: AOS animations. Method: Text-based explanations. Diagrams removed as per user request.
@@ -21,7 +21,6 @@
     - Unfair Competition Section: Details the strengths of dominant platforms and how Saccey competes by solving user pains. Goal: Inform/Highlight. Interaction: Hover effects on cards, clear table presentation. Method: Text, styled HTML table, feature cards. This section replaces the previous 'Ecosystem' section.
     - Monetization Section: Explains revenue streams and financial features. Goal: Inform/Detail. Interaction: Standard section scroll. Method: Feature cards with detailed text.
     - Social Vision & Strategic Goal Sections: Present the ethical and strategic framework. Goal: Detail/Persuade. Interaction: Standard section scroll, AOS animations on sub-sections. Method: Text with clear headings and lists. The social vision section has been further emphasized with more detailed explanations on child protection, combating disinformation, and community control, focusing on friendly, pedagogical, and interpersonal communication.
-    - Content Idea Generator Section: A new interactive tool using LLMs. Goal: Assist creators. Interaction: Text input, button click to trigger API call, display generated text. Method: HTML form elements, JavaScript for API integration, loading indicator. Justification: Demonstrates a practical application of AI within the platform.
     - Prototype Gallery Section: Visualizes the platform's design. Goal: Visualize/Explore. Interaction: Clickable thumbnails open a full-screen image modal with navigation. Method: Image grid, modal pop-up with next/prev buttons. Justification: Allows visual inspection of idealizations.
     - Overall: Uses Tailwind CSS for responsive layout. Chart.js/Plotly.js are not used as no specific quantitative data requiring complex charts was identified in the source report that couldn't be better presented textually or in simple tables. All icons are Font Awesome or Unicode.
     - Chart Containers: Not applicable as no Chart.js/Plotly.js charts are used.
@@ -468,7 +467,7 @@
             </div>
         </section>
 
-        <section id="prototype-section" class="py-20 bg-[--azul-escuro]">
+        <section id="prototype-section" class="py-20 bg-[--azul-cinza-escuro]">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Prototipação e Visão da Plataforma</h2>
                 <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">As telas prototipadas do Saccey ilustram a visão e o design da plataforma.</p>
@@ -551,10 +550,11 @@
         const modalImage = document.getElementById('modalImage');
         const modalImageTitle = document.getElementById('modalImageTitle');
 
-        const contentTopicInput = document.getElementById('contentTopic');
-        const generateIdeasBtn = document.getElementById('generateIdeasBtn');
-        const generatedIdeasOutput = document.getElementById('generatedIdeasOutput');
-        const loadingIndicator = document.getElementById('loadingIndicator');
+        // Removed LLM feature elements
+        // const contentTopicInput = document.getElementById('contentTopic');
+        // const generateIdeasBtn = document.getElementById('generateIdeasBtn');
+        // const generatedIdeasOutput = document.getElementById('generatedIdeasOutput');
+        // const loadingIndicator = document.getElementById('loadingIndicator');
 
         document.querySelectorAll('.audience-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -618,6 +618,8 @@
             }
         });
 
+        // Removed LLM feature event listener
+        /*
         generateIdeasBtn.addEventListener('click', async () => {
             const topic = contentTopicInput.value.trim();
             if (!topic) {
@@ -655,6 +657,7 @@
                 loadingIndicator.classList.add('hidden');
             }
         });
+        */
     </script>
 </body>
 </html>
