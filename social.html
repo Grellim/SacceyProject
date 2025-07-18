@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saccey - A Plataforma Unificada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <!-- AOS Library for Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome for flat icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chosen Palette: Cosmic Purple -->
+    <!-- Application Structure Plan: The application is a single-page interactive web application (SPA) designed for easy consumption and exploration of the Saccey project. It uses a vertical scrolling layout with distinct thematic sections: Hero, Problem, Solution, Target Market, Unfair Competition, Monetization, Social Vision, Strategic Goal, Content Idea Generator, Prototype Gallery, and Opportunity. This structure was chosen to provide a clear narrative flow, guiding the user through the project's rationale, features, and vision. Interactive elements like modals for audience details and image gallery, and a functional content idea generator, enhance user engagement and understanding. Navigation is facilitated by a fixed header with smooth scrolling links. -->
+    <!-- Visualization & Content Choices:
+    - Hero Section: Presents the core value proposition. Goal: Engage. Interaction: Smooth scroll to next section. Method: Text with gradient accents.
+    - Problem & Solution Sections: Illustrate the digital fragmentation issue and Saccey's unifying solution. Goal: Inform/Impact. Interaction: AOS animations. Method: Text-based explanations. Diagrams removed as per user request.
+    - Target Market Section: Highlights key audience profiles. Goal: Organize/Explore. Interaction: Clickable cards open modals with detailed descriptions. Method: Cards with icons and titles, modal pop-ups. Justification: Provides in-depth information on demand without cluttering the main page.
+    - Unfair Competition Section: Details the strengths of dominant platforms and how Saccey competes by solving user pains. Goal: Inform/Highlight. Interaction: Hover effects on cards, clear table presentation. Method: Text, styled HTML table, feature cards. This section replaces the previous 'Ecosystem' section.
+    - Monetization Section: Explains revenue streams and financial features. Goal: Inform/Detail. Interaction: Standard section scroll. Method: Feature cards with detailed text.
+    - Social Vision & Strategic Goal Sections: Present the ethical and strategic framework. Goal: Detail/Persuade. Interaction: Standard section scroll, AOS animations on sub-sections. Method: Text with clear headings and lists. The social vision section has been further emphasized with more detailed explanations on child protection, combating disinformation, and community control, focusing on friendly, pedagogical, and interpersonal communication.
+    - Content Idea Generator Section: A new interactive tool using LLMs. Goal: Assist creators. Interaction: Text input, button click to trigger API call, display generated text. Method: HTML form elements, JavaScript for API integration, loading indicator. Justification: Demonstrates a practical application of AI within the platform.
+    - Prototype Gallery Section: Visualizes the platform's design. Goal: Visualize/Explore. Interaction: Clickable thumbnails open a full-screen image modal with navigation. Method: Image grid, modal pop-up with next/prev buttons. Justification: Allows visual inspection of idealizations.
+    - Overall: Uses Tailwind CSS for responsive layout. Chart.js/Plotly.js are not used as no specific quantitative data requiring complex charts was identified in the source report that couldn't be better presented textually or in simple tables. All icons are Font Awesome or Unicode.
+    - Chart Containers: Not applicable as no Chart.js/Plotly.js charts are used.
+    - General Aesthetics: Minimalistic color scheme (Cosmic Purple), clean typography (Inter, Varela Round), rounded corners, subtle shadows, smooth transitions. Background is light (F5F5F5) in the rendered output, despite being defined as --azul-escuro in CSS for the overall theme, as the main content cards are lighter.
+    - Responsiveness: Achieved via Tailwind's mobile-first approach and media queries in custom CSS.
+    - Engagement: AOS animations, interactive modals, and the LLM tool encourage active exploration.
+    - Impact: Aims to convey the project's vision effectively through a cohesive and interactive narrative.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --roxo-vibrante: #9146FF;
+            --azul-escuro: hsl(230, 20%, 15%); /* Fundo principal */
+            --laranja-neon: #FF6A00;
+            --cinza-roxo-escuro: hsl(230, 15%, 55%);
+            --roxo-claro: #7B2FF7;
+            --roxo-escuro: #5E35B1;
+            --ciano-neon: #00D8FF;
+            --rosa-escuro: #FF3366;
+            --azul-cinza-escuro: hsl(230, 18%, 20%); /* Cartões e modais */
+            --branco-gelo: #F5F5F5; /* Texto principal */
+            --vermelho-pastel-escuro: #6A1E2A;
+            --cinza-claro: #d9d2d9;
+
+            --saccey-orange-start: #FFB464;
+            --saccey-orange-end: #FF8C3C;
+            --text-orange-gradient: linear-gradient(45deg, var(--saccey-orange-start), var(--saccey-orange-end));
+            --dark-purple-hover-start: #5E35B1;
+            --dark-purple-hover-end: #4A2A80;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--azul-escuro); /* Main background */
+            color: var(--branco-gelo);
+            line-height: 1.7;
+        }
+        .saccey-logo-text {
+            font-family: 'Varela Round', sans-serif;
+            background: var(--text-orange-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .accent-gradient-text {
+            background: var(--text-orange-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav ul li a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--roxo-vibrante);
+            transition: width 0.3s;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(145, 70, 255, 0.2); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        }
+        .saccey-hub-animated {
+            animation: pulse 2.5s infinite ease-in-out;
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border-radius: 0.75rem; /* rounded-lg */
+            overflow: hidden; /* Ensures borders/shadows apply correctly */
+        }
+        th, td {
+            border: 1px solid var(--cinza-roxo-escuro);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--roxo-escuro);
+            color: var(--branco-gelo);
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: var(--azul-cinza-escuro);
+        }
+         tr:hover {
+            background-color: var(--roxo-escuro);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--roxo-vibrante);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        .diagram-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            margin-bottom: 40px;
+        }
+
+        .diagram-center-element {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+            height: 180px;
+            background-color: var(--azul-escuro);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 5;
+            color: var(--branco-gelo);
+            font-size: 3rem;
+            border: 2px solid var(--roxo-vibrante);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .diagram-center-element.saccey-hub {
+            background: linear-gradient(45deg, var(--dark-purple-hover-start), var(--dark-purple-hover-end));
+            border: none;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        .diagram-center-element.saccey-hub:hover {
+            animation: none;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+        .diagram-center-element.saccey-hub .saccey-logo-text-small {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 1.8rem;
+            line-height: 1;
+            background: var(--text-orange-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+        }
+        .diagram-center-element.saccey-hub img.saccey-logo-in-hub {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        .diagram-app-icon {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: var(--azul-cinza-escuro);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--branco-gelo);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--cinza-roxo-escuro);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            z-index: 4;
+        }
+        .diagram-app-icon:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        .diagram-app-icon span.label {
+            font-size: 0.75rem;
+            margin-top: 5px;
+            color: var(--cinza-roxo-escuro);
+        }
+        .diagram-app-icon .fa, .diagram-app-icon .fas, .diagram-app-icon .fab {
+            font-size: 2.2rem;
+            color: var(--roxo-vibrante);
+        }
+        /* Positions for Problem Diagram */
+        .problem-app-1 { top: 20px; left: 10%; }
+        .problem-app-2 { top: 10%; right: 10%; }
+        .problem-app-3 { bottom: 20px; left: 20%; }
+        .problem-app-4 { bottom: 10%; right: 15%; }
+        .problem-app-5 { top: 40%; left: 5%; }
+        .problem-app-6 { top: 25%; right: 5%; }
+
+        /* Positions for Solution Diagram */
+        .solution-app-1 { top: 20px; left: 30%; }
+        .solution-app-2 { top: 10%; right: 30%; }
+        .solution-app-3 { bottom: 20px; left: 35%; }
+        .solution-app-4 { bottom: 10%; right: 35%; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <div id="audienceModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 opacity-0 invisible">
+        <div class="modal-content bg-[--azul-cinza-escuro] rounded-2xl p-8 max-w-2xl w-11/12 shadow-2xl transform translate-y-5 opacity-0 relative border border-gray-700">
+            <button class="modal-close-btn absolute top-4 right-4 text-2xl text-gray-400 hover:text-[--roxo-vibrante] transition-colors" onclick="closeAudienceModal()">✖</button>
+            <h3 id="modalAudienceTitle" class="modal-title text-3xl font-bold mb-4"></h3>
+            <div id="modalAudienceContent" class="space-y-4 text-gray-300"></div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 opacity-0 invisible">
+        <div class="modal-content bg-transparent w-auto h-auto p-4 relative">
+            <button class="modal-close-btn absolute -top-2 -right-2 md:top-2 md:right-2 text-2xl text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-[--roxo-vibrante] transition-colors" onclick="closeImageModal()">✖</button>
+            <div class="relative w-[80vw] h-[80vh]">
+                <img id="modalImage" src="" alt="Protótipo Saccey" class="w-full h-full object-contain rounded-lg shadow-2xl">
+                <button class="modal-nav-btn prev absolute top-1/2 left-4 -translate-y-1/2 text-4xl text-white bg-black bg-opacity-40 p-2 rounded-full hover:bg-[--roxo-vibrante] transition-colors" onclick="prevImage()">❮</button>
+                <button class="modal-nav-btn next absolute top-1/2 right-4 -translate-y-1/2 text-4xl text-white bg-black bg-opacity-40 p-2 rounded-full hover:bg-[--roxo-vibrante] transition-colors" onclick="nextImage()">❯</button>
+            </div>
+             <h3 id="modalImageTitle" class="text-xl font-bold text-center mt-4 text-white"></h3>
+        </div>
+    </div>
+
+    <header id="header" class="bg-[--azul-escuro] py-4 fixed top-0 left-0 right-0 z-40 shadow-lg border-b border-gray-800">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#hero" class="flex items-center space-x-2">
+                <span class="saccey-logo-text text-3xl font-bold">Saccey</span>
+            </a>
+            <nav class="hidden md:flex">
+                <ul class="flex items-center space-x-6">
+                    <li><a href="#solution-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">A Solução</a></li>
+                    <li><a href="#market-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">Mercado</a></li>
+                    <li><a href="#competition-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">Concorrência</a></li>
+                    <li><a href="#monetization-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">Monetização</a></li>
+                    <li><a href="#social-vision-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">Visão Social</a></li>
+                    <li><a href="#prototype-section" class="text-gray-300 hover:text-[--roxo-vibrante] font-medium transition-colors relative py-1">Protótipo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section id="hero" class="py-24 text-center">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white" data-aos="fade-up">A Solução para a <span class="accent-gradient-text">Fragmentação Digital</span></h1>
+                <p class="text-lg md:text-xl text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="200">O Saccey é uma plataforma digital inovadora que integra comunicação, criação de conteúdo, streaming, comércio digital, interações sociais e monetização num único ambiente fluido.</p>
+                <a href="#problem-section" class="bg-[--roxo-vibrante] text-white font-bold py-3 px-10 rounded-full hover:bg-[--roxo-claro] transition-all duration-300 shadow-lg hover:shadow-xl" data-aos="fade-up" data-aos-delay="400">Descubra a Oportunidade</a>
+            </div>
+        </section>
+
+        <section id="problem-section" class="py-20 bg-[--azul-cinza-escuro]">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white" data-aos="fade-up">A Dor do Cenário Digital Atual</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">Hoje, os utilizadores enfrentam uma fragmentação significativa nas experiências online: dependência de múltiplos aplicativos, perda de produtividade e dispersão de atenção, menor potencial de monetização e falta de um "lar digital" consolidado. A direita concentra significativamente mais envolvimento nas redes sociais, favorecida por algoritmos opacos e pela nossa falta de unidade estratégica.</p>
+            </div>
+        </section>
+
+        <section id="solution-section" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white" data-aos="fade-up"><span class="saccey-logo-text">Saccey</span>: O <span class="accent-gradient-text">Terceiro Espaço Digital</span> e Instrumento de Poder Popular</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">O Saccey responde a esses problemas com uma experiência de utilizador (UX) que prioriza a <span class="font-semibold">unificação, fluidez e flexibilidade</span>. Todos os recursos podem ser acedidos sem mudar de ambiente, a curva de aprendizagem é reduzida por elementos e padrões já familiares, e a interface é adaptável, robusta e inclusiva (cumpre padrões WAI-ARIA, acessibilidade e internacionalização nativas). É a nossa resposta estratégica para <span class="font-semibold">reorganizar o ecossistema digital</span> e <span class="font-semibold">devolver o protagonismo às pautas populares</span>, criando um verdadeiro "lar digital" onde a construção de comunidades e a monetização de conteúdo ocorrem de forma integrada e sem atritos.</p>
+                <a href="#social-vision-section" class="bg-[--laranja-neon] text-white font-bold py-3 px-8 rounded-full hover:bg-[#FF8C3C] transition-all duration-300 shadow-lg hover:shadow-xl mt-8 inline-block" data-aos="fade-up" data-aos-delay="300">Conheça Nossa Visão e Responsabilidade Social</a>
+            </div>
+        </section>
+
+        <section id="market-section" class="py-20 bg-[--azul-cinza-escuro]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Principais Perfis Atendidos</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">O Saccey promove comunidades inclusivas e escaláveis para diversos públicos. Clique nos cartões para explorar como atendemos a cada perfil-chave, garantindo crescimento orgânico e envolvimento.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="audience-card bg-[--azul-escuro] rounded-2xl p-6 text-center cursor-pointer transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200" data-audience="gamers">
+                        <span class="text-4xl mb-3">🎮</span>
+                        <h3 class="text-xl font-bold text-white">Gamers e Jogadores</h3>
+                    </div>
+                    <div class="audience-card bg-[--azul-escuro] rounded-2xl p-6 text-center cursor-pointer transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300" data-audience="creators">
+                        <span class="text-4xl mb-3">🎨</span>
+                        <h3 class="text-xl font-bold text-white">Criadores de Conteúdo</h3>
+                    </div>
+                    <div class="audience-card bg-[--azul-escuro] rounded-2xl p-6 text-center cursor-pointer transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400" data-audience="thematic">
+                        <span class="text-4xl mb-3">💡</span>
+                        <h3 class="text-xl font-bold text-white">Comunidades Temáticas</h3>
+                    </div>
+                    <div class="audience-card bg-[--azul-escuro] rounded-2xl p-6 text-center cursor-pointer transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="500" data-audience="social">
+                        <span class="text-4xl mb-3">👥</span>
+                        <h3 class="text-xl font-bold text-white">Grupos Sociais</h3>
+                    </div>
+                    <div class="audience-card bg-[--azul-escuro] rounded-2xl p-6 text-center cursor-pointer transition-transform transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="600" data-audience="education">
+                        <span class="text-4xl mb-3">📚</span>
+                        <h3 class="text-xl font-bold text-white">Comunidades de Ensino</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competition-section" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Concorrência Desleal: Gigantes Digitais e Nossas Respostas</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">As plataformas dominantes, embora inovadoras, operam com modelos que geram fragmentação, exploração de dados e vieses algorítmicos. O Saccey as desafia, transformando suas "vantagens" em dores que só nós podemos resolver de forma ética e eficaz.</p>
+                <div class="bg-[--azul-cinza-escuro] p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold mb-4 text-[--roxo-vibrante]">Os Pontos Fortes da Concorrência (e Nossas Respostas)</h3>
+                    <p class="text-gray-400 mb-6">As grandes plataformas digitais possuem vasta experiência e recursos, mas seus modelos de negócio trazem desvantagens para o usuário e o criador. Veja como o Saccey se inspira em seus pontos fortes e os supera:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plataforma (Ponto Forte)</th>
+                                <th>Como o Saccey Compete e Resolve as Dores</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="font-semibold">Discord</span> (Comunicação em Servidores)</td>
+                                <td>Oferecemos servidores com canais de voz/texto e moderação, mas com <span class="font-semibold">governança participativa</span> e <span class="font-semibold">proteção de dados rigorosa</span>, sem exploração comercial do usuário.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">YouTube</span> (Monetização e Vídeo)</td>
+                                <td>Ferramentas de vídeo, listas de reprodução e monetização, porém com <span class="font-semibold">taxas de plataforma mais justas</span>, <span class="font-semibold">algoritmos transparentes</span> que não "shadowban" conteúdo social, e <span class="font-semibold">repasses de economia</span> para equipes.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">Twitch</span> (Transmissão ao Vivo)</td>
+                                <td>Transmissão ao vivo e interação com a audiência, mas com <span class="font-semibold">estúdio integrado</span> mais robusto, <span class="font-semibold">auditório para apresentações</span> controladas, e um foco na <span class="font-semibold">democratização do alcance</span>, não apenas no engajamento sensacionalista.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">Steam</span> (Mercado de Itens Digitais)</td>
+                                <td>Mercado para itens digitais, mas com <span class="font-semibold">marketplace interno</span> que permite vendas peer-to-peer, <span class="font-semibold">contratos inteligentes</span> para splits de receita, e um modelo que não visa apenas o lucro, mas o <span class="font-semibold">financiamento da luta social</span>.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">Reddit</span> (Fóruns Temáticos)</td>
+                                <td>Fóruns temáticos e votações, mas com <span class="font-semibold">moderação comunitária ativa</span> contra discursos de ódio e desinformação, e <span class="font-semibold">fomento à educação midiática</span> para capacitar os usuários a discernir a verdade.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">Telegram</span> (Mensagens Pessoais e Grupos)</td>
+                                <td>Mensagens pessoais e grupos privados, mas com <span class="font-semibold">criptografia ponta a ponta</span> e <span class="font-semibold">armazenamento de dados no Brasil</span>, garantindo soberania e privacidade total, sem risco de exploração por terceiros.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">TikTok/Reels/Shorts</span> (Vídeos Curtos e Engajamento Rápido)</td>
+                                <td>Vídeos curtos e envolvimento rápido, mas com <span class="font-semibold">algoritmos que priorizam a pluralidade</span> e o conteúdo educativo sobre o sensacionalismo, e <span class="font-semibold">combate ativo à desinformação</span>, sem a manipulação algorítmica que reprime criadores progressistas.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="monetization-section" class="py-20 bg-[--azul-cinza-escuro]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Sistema de Monetização de Conteúdo</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">No Saccey, a liberdade criativa e financeira andam lado a lado, com um ecossistema robusto para criadores e consumidores.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div class="card-feature bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="font-bold text-xl accent-gradient-text mb-2">💰 Moeda Integrada "Tips"</h4>
+                        <p class="text-gray-400">A nossa moeda digital permite doações diretas aos criadores (semelhante a "Superchats" ou "Bits" da Twitch), assinaturas para conteúdo exclusivo e a compra e venda de ativos digitais dentro do mercado. Tudo num só lugar, simplificando as transações.</p>
+                    </div>
+                     <div class="card-feature bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+                        <h4 class="font-bold text-xl accent-gradient-text mb-2">🎙️ Conteúdo Além do Vídeo: Podcasts e Mais</h4>
+                        <p class="text-gray-400">Além de vídeos e transmissões ao vivo, o Saccey suporta a criação e distribuição de podcasts, artigos, e-books e outros formatos de multimédia.</p>
+                    </div>
+                     <div class="card-feature bg-[--azul-escuro] p-6 rounded-2xl md:col-span-2" data-aos="fade-up" data-aos-delay="400">
+                        <h4 class="font-bold text-xl accent-gradient-text mb-2">💳 Levantamento de Ganhos Simplificado</h4>
+                        <p class="text-gray-400">Facilitamos o levantamento dos ganhos dos criadores através de integrações com as principais plataformas de pagamento, como <span class="font-semibold">Stripe</span>, <span class="font-semibold">PayPal</span> e <span class="font-semibold">Mercado Pago</span>. Os seus lucros, à sua maneira.</p>
+                    </div>
+                     <div class="card-feature bg-[--azul-escuro] p-6 rounded-2xl md:col-span-2" data-aos="fade-up" data-aos-delay="500">
+                        <h4 class="font-bold text-xl accent-gradient-text mb-2">📊 Anúncios e Repasse de Economia</h4>
+                        <p class="text-gray-400">Oferecemos a possibilidade de habilitar anúncios nos espaços, gerando uma nova fonte de receita. Implementamos um sistema de repasse de economia que permite aos administradores dos espaços e aos criadores de conteúdo partilharem diretamente uma parte dos ganhos com as suas equipas (administrativa e pessoal).</p>
+                    </div>
+                     <div class="card-feature bg-[--azul-escuro] p-6 rounded-2xl md:col-span-2" data-aos="fade-up" data-aos-delay="600">
+                        <h4 class="font-bold text-xl accent-gradient-text mb-2">🌍 Criadores Sem Limites de Canais</h4>
+                        <p class="text-gray-400">Os criadores não precisam de se limitar a um único canal ou comunidade. Podem criar e distribuir os seus conteúdos em vários espaços de comunidades diferentes dentro do Saccey, alcançando diversas audiências e maximizando o seu impacto e monetização.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="social-vision-section" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Visão Social e Regulamentadora: Uma Plataforma para o Povo</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">O Saccey propõe uma governança que centraliza a proteção, a ética e a democracia digital, com uma forte aproximação à classe operária e uma comunicação amigável, pedagógica e interpessoal. Queremos construir um espaço onde a voz do povo seja amplificada e compreendida por todos.</p>
+                
+                <div class="bg-[--azul-cinza-escuro] p-8 rounded-2xl space-y-8" data-aos="fade-up" data-aos-delay="200">
+                    
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-[--roxo-vibrante] mb-3">1. Proteção à Infância e o Direito de Ser Criança</h3>
+                        <p class="text-gray-400 mb-4">A naturalização da exposição de crianças nas redes é perigosa. No Saccey, as <span class="font-semibold">contas infantis são privadas por padrão e sem monetização</span>, protegendo a privacidade e segurança dos mais novos. Limitamos a coleta de dados e proibimos anúncios personalizados para menores, garantindo um ambiente seguro para o desenvolvimento emocional saudável. Implementamos moderação rígida e automática de conteúdos envolvendo crianças, com denúncia prioritária, e exigimos autenticação de idade e consentimento parental para publicação de conteúdo por menores. O objetivo é que a criação de conteúdo não seja vista como uma obrigação, mas sim que as crianças tenham o direito de brincar e experimentar o anonimato necessário ao seu desenvolvimento.</p>
+                        <h4 class="text-xl font-semibold text-white mb-2">Medidas de Proteção Adicionais:</h4>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 pl-4">
+                            <li><span class="font-semibold">Bloqueio de Download ou Compartilhamento:</span> Impedimos que postagens de crianças sejam baixadas ou compartilhadas indevidamente.</li>
+                            <li><span class="font-semibold">Educação Midiática e Limites Claros:</span> Oferecemos diretrizes e ferramentas para pais e educadores definirem o que é ou não permitido na exposição e criação de conteúdo por crianças.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-[--roxo-vibrante] mb-3">2. Combate à Desinformação, Viés Algorítmico e Controle Midiático: A Verdade Acessível a Todos</h3>
+                        <p class="text-gray-400 mb-4">Plataformas dominantes controlam o fluxo de informações, favorecendo visões liberais e silenciando perspetivas progressistas. No Saccey, lutamos contra isso com:</p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 pl-4">
+                            <li><span class="font-semibold">Transparência Algorítmica</span>: Adotamos algoritmos auditáveis e critérios de recomendação públicos, permitindo contestação de bloqueios ou redução de alcance. Queremos que todos entendam como a informação flui.</li>
+                            <li><span class="font-semibold">Garantia de Pluralidade</span>: Ferramentas que asseguram espaço igualitário para conteúdos críticos, sociais e de minorias, superando vieses políticos e entregando real diversidade ao utilizador. A voz da classe trabalhadora terá o seu devido lugar.</li>
+                            <li><span class="font-semibold">Checagem Comunitária de Fatos</span>: Implementamos sistemas colaborativos, como notas da comunidade, além de parcerias com agências independentes de checagem e promoção de literacia mediática. A verdade é construída coletivamente.</li>
+                            <li><span class="font-semibold">Política de Proteção de Dados Rigorosa</span>: O utilizador não é mercadoria. Garantimos consentimento expresso na coleta e uso, armazenamento mínimo e criptografia ponta a ponta, evitando venda ou transferência de dados a terceiros.</li>
+                            <li><span class="font-semibold">Combate à Sabotagem de Criadores Sociais</span>: Processos transparentes para denúncias de <span class="italic">shadowban</span>, avaliações públicas dos critérios de moderação e mecanismos para contestação. Acreditamos na liberdade de expressão para a transformação social.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-[--roxo-vibrante] mb-3">3. Responsabilidade Social e Controle Comunitário: A Plataforma É Nossa</h3>
+                        <p class="text-gray-400 mb-4">Além da proteção aos utilizadores, o Saccey propõe uma governança que centraliza o poder nas mãos da comunidade, promovendo uma comunicação mais humana e empática:</p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 pl-4">
+                            <li><span class="font-semibold">Controle Coletivo e Governança Participativa</span>: As comunidades podem deliberar sobre regras, banimentos e modificação de diretrizes, combatendo crimes, discursos de ódio e preconceito. A moderação é um ato de cuidado coletivo.</li>
+                            <li><span class="font-semibold">Responsabilidade na Moderação</span>: Ferramentas automatizadas e equipas treinadas para identificar práticas ilícitas, racismo, misoginia, homofobia e discursos de ódio, com protocolos de acolhimento a vítimas e sanções eficazes. A nossa plataforma será um espaço seguro e acolhedor.</li>
+                            <li><span class="font-semibold">Canal de Denúncias Acessível e Eficaz</span>: Com retorno rápido e transparência sobre as decisões. Queremos ouvir e agir em conjunto.</li>
+                            <li><span class="font-semibold">Fomento à Educação Mediática</span>: Capacitação de utilizadores e moderadores para reconhecer narrativas manipuladoras, <span class="italic">fake news</span>, preconceitos e ações mal-intencionadas. Acreditamos que a educação é a base da nossa liberdade.</li>
+                            <li><span class="font-semibold">Comunicação Amigável e Pedagógica</span>: O Saccey incentiva um tom de conversa que aproxima, explica e ensina. Queremos que o conhecimento sobre a luta da classe trabalhadora seja acessível, com linguagem simples e exemplos do dia a dia, transformando conceitos complexos em ferramentas de empoderamento.</li>
+                            <li><span class="font-semibold">Interpessoal e Simpática</span>: Valorizamos a interação humana genuína. A plataforma é desenhada para promover debates construtivos, o respeito às diferenças e a empatia, criando laços de solidariedade e camaradagem entre os utilizadores.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="strategic-goal-section" class="py-20 bg-[--azul-cinza-escuro]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Objetivo Estratégico: Reorganizar o Ecossistema Digital para a Consciência Social</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">O propósito central é concentrar recursos para a <span class="font-semibold">conscientização das massas</span> sobre a luta da classe trabalhadora, promovendo reflexão, envolvimento político e distribuição democrática de conhecimento — algo que as redes dominantes sabotam ou marginalizam.</p>
+                 <div class="space-y-8">
+                    <div class="bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-right">
+                        <h3 class="font-bold text-xl accent-gradient-text mb-2">Fase 1: Atração do Mainstream</h3>
+                        <p class="text-gray-400">Seduzir influenciadores e marcas com ferramentas superiores de monetização, estúdio integrado e UX premium. Campanhas que destacam liberdade criativa e receita justa convidam marcas e criadores conservadores a experimentarem a plataforma.</p>
+                    </div>
+                     <div class="bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-left">
+                        <h3 class="font-bold text-xl accent-gradient-text mb-2">Fase 2: Desconcentração do Poder Mediático</h3>
+                        <p class="text-gray-400">Reconfiguração dos algoritmos para promover descentralização do alcance, fragmentando o público de criadores concentradores e reduzindo monopólios de narrativa. Moderadores e comunidade reduzem a propagação de desinformação e discurso de ódio.</p>
+                    </div>
+                     <div class="bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-right">
+                        <h3 class="font-bold text-xl accent-gradient-text mb-2">Fase 3: Amplificação de Pautas Populares e Reeducação das Massas</h3>
+                        <p class="text-gray-400">Destaque editorial para conteúdos de interesse público, educação política e causas sociais. Eventos temáticos, curadoria editorial e séries colaborativas elevam visibilidade de movimentos sociais. Trilhas de formação embutidas em formatos leves.</p>
+                    </div>
+                     <div class="bg-[--azul-escuro] p-6 rounded-2xl" data-aos="fade-left">
+                        <h3 class="font-bold text-xl accent-gradient-text mb-2">Fase 4: Governança Participativa</h3>
+                        <p class="text-gray-400">Conselhos de utilizadores definem políticas, reforçando confiança e legitimidade democrática. Mecanismos de votação em cadeia (blockchain light) registam decisões e evitam captura corporativa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="llm-feature-section" class="py-20">
+             <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Gerador de Ideias de Conteúdo ✨</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">Precisa de inspiração? Descreva um tema e deixe a IA do Saccey gerar ideias criativas para si!</p>
+                <div class="max-w-2xl mx-auto bg-[--azul-cinza-escuro] p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <textarea id="contentTopic" rows="3" class="w-full p-3 rounded-lg bg-[--azul-escuro] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[--roxo-vibrante]" placeholder="Ex: Dicas de jogos indie, culinária vegana..."></textarea>
+                    <button id="generateIdeasBtn" class="w-full mt-4 bg-[--roxo-vibrante] text-white font-bold py-3 px-8 rounded-lg hover:bg-[--roxo-claro] transition-all duration-300">Gerar Ideias</button>
+                    <div id="loadingIndicator" class="hidden mt-4 text-center text-gray-400">
+                        <div class="loading-spinner"></div>
+                        A gerar ideias...
+                    </div>
+                    <div id="generatedIdeasOutput" class="mt-6 p-4 rounded-lg bg-[--azul-escuro] text-gray-300 whitespace-pre-wrap min-h-[100px]">As suas ideias aparecerão aqui.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="prototype-section" class="py-20 bg-[--azul-cinza-escuro]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-center" data-aos="fade-up">Prototipação e Visão da Plataforma</h2>
+                <p class="text-lg text-[--cinza-roxo-escuro] max-w-3xl mx-auto mb-12 text-center" data-aos="fade-up" data-aos-delay="100">As telas prototipadas do Saccey ilustram a visão e o design da plataforma.</p>
+                <div class="gallery-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="gallery-thumbnail rounded-lg overflow-hidden cursor-pointer" onclick="openImageModal(0)" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://i.imgur.com/7fY23yZ.png" alt="Feed Integrado" class="w-full h-full object-cover">
+                        <div class="p-2 text-center text-sm font-medium text-gray-300">Feed Integrado</div>
+                    </div>
+                     <div class="gallery-thumbnail rounded-lg overflow-hidden cursor-pointer" onclick="openImageModal(1)" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://i.imgur.com/BNOzU3h.png" alt="Feed Detalhado" class="w-full h-full object-cover">
+                        <div class="p-2 text-center text-sm font-medium text-gray-300">Feed Detalhado</div>
+                    </div>
+                     <div class="gallery-thumbnail rounded-lg overflow-hidden cursor-pointer" onclick="openImageModal(2)" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://i.imgur.com/gboGyNe.png" alt="Estúdio do Criador" class="w-full h-full object-cover">
+                        <div class="p-2 text-center text-sm font-medium text-gray-300">Estúdio do Criador</div>
+                    </div>
+                     <div class="gallery-thumbnail rounded-lg overflow-hidden cursor-pointer" onclick="openImageModal(3)" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://i.imgur.com/gUtsNSH.png" alt="Transmissões ao Vivo" class="w-full h-full object-cover">
+                        <div class="p-2 text-center text-sm font-medium text-gray-300">Transmissões ao Vivo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="opportunity-section" class="py-20 bg-[--roxo-vibrante]">
+            <div class="container mx-auto px-6 text-center text-white">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up">Porquê Investir no Saccey?</h2>
+                <p class="text-lg max-w-3xl mx-auto opacity-90 mb-8" data-aos="fade-up" data-aos-delay="100">O Saccey junta tecnologia robusta, ética algorítmica e compromisso social num <span class="font-semibold">“terceiro espaço” digital</span> onde a liberdade de criação se alia à responsabilidade coletiva. É a oportunidade de conquistar o mercado <span class="font-semibold">sem perder o horizonte da transformação social</span> — porque a renda gerada volta para financiar a luta, formar comunicadores e potenciar a voz da classe trabalhadora.</p>
+                <a href="https://discord.gg/MuxAYuat" target="_blank" rel="noopener noreferrer" class="bg-[--laranja-neon] text-white font-bold py-3 px-10 rounded-full hover:bg-[#FF8C3C] transition-all duration-300 shadow-lg hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">Junte-se ao nosso Discord</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[--azul-escuro] py-6 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>© 2025 Saccey • Desenvolvido e idealizado por <span class="saccey-logo-text font-semibold">Gregory Vallim</span></p>
+            <p>VibeCode <span class="text-[--rosa-escuro]">❤</span></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 800 });
+
+        const audienceData = {
+            gamers: {
+                title: "Gamers e Jogadores",
+                content: `<p>São nativos digitais, procuram conexão e têm alto envolvimento com conteúdo e comércio no jogo.</p>`
+            },
+            creators: {
+                title: "Criadores de Conteúdo",
+                content: `<p>Procuram ferramentas eficientes para produção, monetização e envolvimento direto com a sua audiência.</p>`
+            },
+            thematic: {
+                title: "Comunidades Temáticas",
+                content: `<p>Pessoas com interesses específicos (tecnologia, arte, hobbies) procuram um local para partilhar conhecimento e paixão.</p>`
+            },
+            social: {
+                title: "Grupos Sociais",
+                content: `<p>Desde grandes redes a círculos íntimos, todos precisam de comunicação eficiente e personalizada.</p>`
+            },
+            education: {
+                title: "Comunidades de Ensino",
+                content: `<p>Plataformas de e-learning muitas vezes carecem de interação e envolvimento em tempo real.</p>`
+            }
+        };
+
+        const imageGallery = [
+            { src: "https://i.imgur.com/7fY23yZ.png", title: "Feed Integrado" },
+            { src: "https://i.imgur.com/BNOzU3h.png", title: "Feed Detalhado" },
+            { src: "https://i.imgur.com/gboGyNe.png", title: "Estúdio do Criador" },
+            { src: "https://i.imgur.com/gUtsNSH.png", title: "Transmissões ao Vivo" }
+        ];
+        let currentImageIndex = 0;
+
+        const audienceModal = document.getElementById('audienceModal');
+        const modalAudienceTitle = document.getElementById('modalAudienceTitle');
+        const modalAudienceContent = document.getElementById('modalAudienceContent');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalImageTitle = document.getElementById('modalImageTitle');
+
+        const contentTopicInput = document.getElementById('contentTopic');
+        const generateIdeasBtn = document.getElementById('generateIdeasBtn');
+        const generatedIdeasOutput = document.getElementById('generatedIdeasOutput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        document.querySelectorAll('.audience-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const audienceType = card.dataset.audience;
+                const data = audienceData[audienceType];
+                if (data) {
+                    modalAudienceTitle.textContent = data.title;
+                    modalAudienceContent.innerHTML = data.content;
+                    audienceModal.classList.remove('invisible', 'opacity-0');
+                    audienceModal.querySelector('.modal-content').classList.remove('translate-y-5', 'opacity-0');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        function closeAudienceModal() {
+            audienceModal.classList.add('invisible', 'opacity-0');
+            audienceModal.querySelector('.modal-content').classList.add('translate-y-5', 'opacity-0');
+            document.body.style.overflow = 'auto';
+        }
+
+        audienceModal.addEventListener('click', e => {
+            if (e.target === audienceModal) closeAudienceModal();
+        });
+
+        function openImageModal(index) {
+            currentImageIndex = index;
+            updateImageModal();
+            imageModal.classList.remove('invisible', 'opacity-0');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            imageModal.classList.add('invisible', 'opacity-0');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateImageModal() {
+            modalImage.src = imageGallery[currentImageIndex].src;
+            modalImageTitle.textContent = imageGallery[currentImageIndex].title;
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + imageGallery.length) % imageGallery.length;
+            updateImageModal();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % imageGallery.length;
+            updateImageModal();
+        }
+        
+        imageModal.addEventListener('click', e => {
+            if (e.target === imageModal) closeImageModal();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeAudienceModal();
+                closeImageModal();
+            }
+        });
+
+        generateIdeasBtn.addEventListener('click', async () => {
+            const topic = contentTopicInput.value.trim();
+            if (!topic) {
+                generatedIdeasOutput.textContent = "Por favor, insira um tema para gerar ideias.";
+                return;
+            }
+
+            loadingIndicator.classList.remove('hidden');
+            generatedIdeasOutput.textContent = '';
+
+            try {
+                let chatHistory = [{ role: "user", parts: [{ text: `Gere uma lista de 5 a 7 ideias criativas e variadas de conteúdo (vídeos, podcasts, artigos, etc.) sobre "${topic}". Para cada ideia, forneça um título e uma breve descrição.` }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+
+                if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
+                    generatedIdeasOutput.textContent = result.candidates[0].content.parts[0].text;
+                } else {
+                    generatedIdeasOutput.textContent = "Não foi possível gerar ideias. Tente novamente.";
+                    console.error("API Response Error:", result);
+                }
+            } catch (error) {
+                generatedIdeasOutput.textContent = "Erro ao comunicar com a API. Tente novamente.";
+                console.error("Fetch Error:", error);
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
